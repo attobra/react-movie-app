@@ -1,6 +1,6 @@
-import {SEARCH_MOVIE, FETCH_MOVIES} from './types'
+import {SEARCH_MOVIE, FETCH_MOVIES, FETCH_MOVIE, LOADING} from './types'
 import axios from 'axios'
-import APIKey from '../APIKey'
+// import APIKey from '../APIKey'
 
 //dispatch is coming from the redux-thunk middleware
 export const searchMovie = text => dispatch =>{ 
@@ -19,8 +19,26 @@ export const fetchMovies = text => dispatch => {
     .get(`http://www.omdbapi.com/?apikey=f9d68eae&s=${text}`)
     .then(response => dispatch ({
         type: FETCH_MOVIES,
-        payload: response.data.Search
+        payload: response.data
     })
     )
     .catch(err=>console.log(err))
+}
+
+export const fetchMovie = id => dispatch => {
+    axios
+    .get(`http://www.omdbapi.com/?apikey=f9d68eae&i=${id}`)
+    .then(response => dispatch ({
+        type: FETCH_MOVIE,
+        payload: response.data
+    })
+    )
+    .catch(err=>console.log(err))
+}
+
+export const setLoading = () =>{
+    return {
+        type: LOADING
+    }
+
 }

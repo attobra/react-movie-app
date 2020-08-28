@@ -1,4 +1,4 @@
-import {SEARCH_MOVIE, FETCH_MOVIES} from '../actions/types'
+import {SEARCH_MOVIE, FETCH_MOVIES, FETCH_MOVIE, LOADING} from '../actions/types'
 
 //initial state is the state of the application
 const initialState ={
@@ -24,7 +24,18 @@ export default function (state=initialState, action){
           return {
             ...state,
             movies: action.payload,
-            
+            loading: false
+          };
+          case FETCH_MOVIE:
+          return {
+            ...state,
+            movie: action.payload,
+            loading: false
+          };
+          case LOADING:
+          return {
+            ...state,
+            loading: true
           };
         default:
             return state;
