@@ -1,23 +1,22 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import {fetchMovie, setLoading} from '../../actions/searchActions'
+import { fetchMovie, setLoading } from "../../actions/searchActions";
 
-import Spinner from '../layout/Spinner'
+import Spinner from "../layout/Spinner";
 
 export class Movie extends Component {
-    componentDidMount(){
-        this.props.fetchMovie(this.props.match.params.id)
-        this.props.setLoading()
-    }
-    render() {
+  componentDidMount() {
+    this.props.fetchMovie(this.props.match.params.id);
+    this.props.setLoading();
+  }
+  render() {
+    //destructuring
+    const { loading, movie } = this.props;
 
-        //destructuring
-        const {loading, movie} = this.props
-
-        let movieInfo = (
-            <div className="container">
+    let movieInfo = (
+      <div className="container">
         <div className="row">
           <div className="col-md-4 card card-body">
             <img src={movie.Poster} className="thumbnail" alt="Poster" />
@@ -56,7 +55,7 @@ export class Movie extends Component {
               {movie.Plot}
               <hr />
               <a
-                href={'https://www.imdb.com/title/' + movie.imdbID}
+                href={"https://www.imdb.com/title/" + movie.imdbID}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary"
@@ -70,17 +69,16 @@ export class Movie extends Component {
           </div>
         </div>
       </div>
-        )
-        
+    );
+
     let content = loading ? <Spinner /> : movieInfo;
     return <div>{content}</div>;
-    }
+  }
 }
 
-const mapStateToProps = state => ({
-    loading: state.movies.loading,
-    movie: state.movies.movie
+const mapStateToProps = (state) => ({
+  loading: state.movies.loading,
+  movie: state.movies.movie,
+});
 
-})
-
-export default connect(mapStateToProps, {fetchMovie, setLoading} )(Movie)
+export default connect(mapStateToProps, { fetchMovie, setLoading })(Movie);
